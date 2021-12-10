@@ -7,7 +7,7 @@ import {
   getCategories,
   getCategoryById,
 } from "../services/category.service";
-import {getProductsByCategory} from "../services/product.service";
+import { getProductsByCategory } from "../services/product.service";
 const router: Router = Router();
 router.post("/", async (req: Request, res: Response) => {
   try {
@@ -15,7 +15,9 @@ router.post("/", async (req: Request, res: Response) => {
     await createCategory(name, description);
     return res.status(HttpStatusCodes.CREATED).json(null);
   } catch (err) {
-    console.error(err.message);
+    if (err.name === "ValidationError") {
+      return res.status(HttpStatusCodes.BAD_REQUEST).send(err.message);
+    }
     res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");
   }
 });
@@ -23,7 +25,7 @@ router.get("/:id", async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const category: ICategory = await getCategoryById(parseInt(id));
-    return res.status(HttpStatusCodes.CREATED).json(category);
+    return res.status(HttpStatusCodes.OK).json(category);
   } catch (err) {
     console.error(err.message);
     res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");
@@ -32,7 +34,7 @@ router.get("/:id", async (req: Request, res: Response) => {
 router.get("/", async (req: Request, res: Response) => {
   try {
     const categories: ICategory[] = await getCategories();
-    return res.status(HttpStatusCodes.CREATED).json(categories);
+    return res.status(HttpStatusCodes.OK).json(categories);
   } catch (err) {
     console.error(err.message);
     res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");
@@ -42,7 +44,7 @@ router.get("/:id/products", async (req: Request, res: Response) => {
   try {
     const category: number = parseInt(req.params.id);
     const products: IProduct[] = await getProductsByCategory(category);
-    return res.status(HttpStatusCodes.CREATED).json(products);
+    return res.status(HttpStatusCodes.OK).json(products);
   } catch (err) {
     console.error(err.message);
     res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");

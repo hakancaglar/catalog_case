@@ -4,7 +4,6 @@ import { addProductToFavorite } from "../services/product.service";
 const router: Router = Router();
 router.post("/favorite", async (req: Request, res: Response) => {
   try {
-      console.log(req.body);
     const { productId } = req.body;
     await addProductToFavorite(parseInt(productId));
     return res.status(HttpStatusCodes.OK).json(null);

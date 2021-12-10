@@ -1,5 +1,5 @@
 import Category, { ICategory } from "../models/category.model";
-import {  initializeSequence } from "./counter.service";
+import { initializeSequence } from "./counter.service";
 initializeSequence("category");
 
 async function createCategory(

@@ -7,9 +7,15 @@ export interface ICategory extends Document {
   id: number;
 }
 const CategorySchema: Schema = new Schema({
-  name: { type: String, required: true },
-  description: { type: String, required: true },
-  id: { type: Number,  unique: true },
+  name: {
+    type: String,
+    required: [true, "name is required"],
+  },
+  description: {
+    type: String,
+    required: [true, "description is required"],
+  },
+  id: { type: Number, unique: true },
 });
 CategorySchema.pre("save", async function (next: any) {
   this.id = await getNextValue("category");

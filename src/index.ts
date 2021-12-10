@@ -15,5 +15,5 @@ app.use("/categories", categoryRoutes);
 app.use("/products", productRoutes);
 app.use("/sliders", sliderRoutes);
 app.use("/", baseRoutes);
-console.log(port + "kjhkj");
+console.log(port);
 app.listen(port, () => console.log(`Running on port ${port}`));

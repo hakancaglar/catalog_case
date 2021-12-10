@@ -9,14 +9,16 @@ router.post("/", async (req: Request, res: Response) => {
     await createSlider(image, parseInt(productId));
     return res.status(HttpStatusCodes.CREATED).json(null);
   } catch (err) {
-    console.error(err.message);
+    if (err.name === "ValidationError") {
+        return res.status(HttpStatusCodes.BAD_REQUEST).send(err.message);
+      }
     res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");
   }
 });
 router.get("/", async (req: Request, res: Response) => {
   try {
     const sliders: ISlider[] = await getSliders();
-    return res.status(HttpStatusCodes.CREATED).json(sliders);
+    return res.status(HttpStatusCodes.OK).json(sliders);
   } catch (err) {
     console.error(err.message);
     res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");
