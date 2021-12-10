@@ -3,8 +3,7 @@ import { connect } from "mongoose";
 const connectDB = async () => {
   try {
     const mongoURI: string =
-      process.env.mongoURI ||
-      "mongodb://localhost:27017/slider?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false";
+      process.env.mongoURI;
     await connect(mongoURI);
     console.log("MongoDB Connected...");
   } catch (err) {
