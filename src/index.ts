@@ -1,5 +1,7 @@
 import express from "express";
+import dotenv from 'dotenv';
 const app = express();
+dotenv.config();
 const port = process.env.PORT || 3000;
 import connectDB from "./loaders/db.loader";
 import bodyParser from "body-parser";
@@ -15,5 +17,4 @@ app.use("/categories", categoryRoutes);
 app.use("/products", productRoutes);
 app.use("/sliders", sliderRoutes);
 app.use("/", baseRoutes);
-console.log(port);
 app.listen(port, () => console.log(`Running on port ${port}`));
