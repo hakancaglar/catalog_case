@@ -1,14 +1,12 @@
 import Category, { ICategory } from "../models/category.model";
-import { getNextValue, initializeSequence } from "./counter.service";
+import {  initializeSequence } from "./counter.service";
 initializeSequence("category");
 
 async function createCategory(
   name: string,
   description: string
 ): Promise<void> {
-  const seq = await getNextValue("category");
   await Category.create({
-    id: seq,
     name,
     description,
   });

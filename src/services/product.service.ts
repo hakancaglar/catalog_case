@@ -1,5 +1,5 @@
 import Product, { IProduct } from "../models/product.model";
-import { getNextValue, initializeSequence } from "./counter.service";
+import { initializeSequence } from "./counter.service";
 initializeSequence("product");
 
 async function createProduct(
@@ -8,9 +8,7 @@ async function createProduct(
   category: number,
   price: number
 ): Promise<void> {
-  const seq = await getNextValue("product");
   await Product.create({
-    id: seq,
     name,
     category,
     price,
@@ -43,4 +41,9 @@ async function addProductToFavorite(id: number): Promise<void> {
   await Product.findOneAndUpdate({ id }, { $set: { isFavorite: true } }).lean();
 }
 
-export { createProduct, getProductsByCategory, getProductById,addProductToFavorite };
+export {
+  createProduct,
+  getProductsByCategory,
+  getProductById,
+  addProductToFavorite,
+};
